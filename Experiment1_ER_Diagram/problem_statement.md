@@ -26,7 +26,6 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 <img width="982" height="667" alt="WhatsApp Image 2026-11-02 at 10 29 53 PM" src="https://github.com/user-attachments/assets/b08212e4-8e28-49e5-a8f5-74259bc5d5f8" />
 
 
-### Entities and Attributes
 
 ## Entities and Attributes
 
@@ -53,10 +52,13 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 | Program — Handled by — Trainer | M:N | Partial on both sides | Programs can have multiple trainers |
 
 ### Assumptions
-- 
-- 
-- 
-
+1.Each member has a unique M_ID.
+2.Each program has a unique P_ID, and each trainer has a unique T_ID.
+3.A member can enroll in multiple programs, and each program can have multiple members.
+4.A member can hold membership records over time.
+5.Membership payments are linked to Membership, while session payments are linked to Session.
+6.Each session is conducted by a trainer and has an attendance record.
+7.The diagram uses P_ID for both Program and Payment. In an implemented database, use distinct primary keys such as Program_ID and Payment_ID to avoid ambiguity.
 ---
 
 # Scenario B: City Library Event & Book Lending System
@@ -77,28 +79,41 @@ The Central Library wants to manage book lending and cultural events.
 
 <img width="1462" height="692" alt="WhatsApp Image 2026-11-02 at 10 30 03 PM" src="https://github.com/user-attachments/assets/aadff396-68d9-4d4a-bb04-b2f81e5a2519" />
 
-### Entities and Attributes
+
+## Entities and Attributes
 
 | Entity | Attributes (PK, FK) | Notes |
 |--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Member | M_ID (PK), Name, Phone, Email, Join_date | Stores member details |
+| BOOK_LOAN | L_ID (PK), Loan_date, Return_date, Status, M_ID (FK), B_ID (FK) | Records book borrowing transactions |
+| BOOK | B_ID (PK), Title, Author, ISBN, Category | Stores book details |
+| Speaker | S_ID (PK), Name, Bio, Email, Contact, Phone | Stores speaker/author details |
+| Event_speaker | E_ID (FK), S_ID (FK), Designation | Connects events with speakers |
+| Event | E_ID (PK), Title, Description, Date, Time | Stores library event details |
+| FINE | Fine_ID (PK), L_ID (FK), Amount, Date, Reason | Records overdue book fines |
+| ROOM | R_ID (PK), Name, Type, Capacity | Stores room details |
 
-### Relationships and Constraints
+## Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+|--------------|-------------|---------------|-------|
+| Member — borrows — BOOK_LOAN | 1:N | BOOK_LOAN: Total; Member: Partial | A member can borrow multiple books |
+| BOOK_LOAN — for — BOOK | N:1 | BOOK_LOAN: Total; BOOK: Partial | Each loan refers to one book |
+| Member — registers — Event | M:N | Partial on both sides | Members can register for multiple events |
+| Speaker — speaks — Event_speaker | 1:N | Event_speaker: Total; Speaker: Partial | A speaker can participate in multiple events |
+| Event_speaker — has — Event | N:1 | Event_speaker: Total; Event: Total | Each event-speaker record links one speaker to one event |
+| BOOK_LOAN — generates — FINE | 1:0..1 | FINE: Total; BOOK_LOAN: Partial | A loan may generate a fine for late return |
+| Member — pays — FINE | 1:N | FINE: Total; Member: Partial | A member can pay multiple fines |
+| Event — held in — ROOM | N:1 | Event: Total; ROOM: Partial | Each event takes place in one room |
 
 ### Assumptions
-- 
-- 
-- 
+1.Each member, book, loan, event, speaker, room, and fine has a unique identifier.
+2.A member can borrow multiple books, and each loan refers to one member and one book.
+3.A fine is generated only when a loan incurs an overdue charge; a loan may have no fine.
+4.Members can register for multiple events, and each event can have multiple registered members.
+5.An event can have multiple speakers, and a speaker can participate in multiple events.
+6.Each event is assigned to one room, while a room can host different events at different times.
+7.Room bookings for individual study purposes are not explicitly represented in this diagram; a separate ROOM_BOOKING entity would be needed to manage them.
 
 ---
 
@@ -119,28 +134,39 @@ A popular restaurant wants to manage reservations, orders, and billing.
 <img width="1600" height="1356" alt="image" src="https://github.com/user-attachments/assets/5211fa68-0faf-4cec-a0d8-de5fb590b7b6" />
 <img width="942" height="722" alt="WhatsApp Image 2026-11-02 at 10 30 10 PM" src="https://github.com/user-attachments/assets/c87ea901-28da-4602-a752-8367a576394a" />
 
-### Entities and Attributes
+## Entities and Attributes
 
 | Entity | Attributes (PK, FK) | Notes |
 |--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Customer | C_ID (PK), Name, Address (City, St_Name, Pin), Phone, Email | Stores customer details; Phone and Email are multivalued attributes in the diagram |
+| Reservation | Reservation_ID (PK), Date, Time, No_of_Guests, Type, C_ID (FK), W_ID (FK) | Stores reservation details, including advance bookings and walk-ins |
+| Waiter | W_ID (PK), Name, Phone, Shift | Stores waiter details |
+| ORDER | Order_ID (PK), Date, Status, Total_Amount, Reservation_ID (FK) | Stores food orders linked to reservations |
+| BILL | Bill_ID (PK), Total_Amount, Bill_Date, Payment_Status, Service_Charge, Tax, Reservation_ID (FK) | Stores billing details for reservations |
+| ORDER_ITEM | Item_ID (PK), Order_ID (FK), Dish_ID (FK), Quantity, Price | Records individual dishes and their quantities in an order |
+| DISH | Dish_ID (PK), Name, Price, Description, Category_ID (FK) | Stores food item details |
+| CATEGORY | Category_ID (PK), Name | Stores dish categories, such as starters, main course, and desserts |
 
-### Relationships and Constraints
+## Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
-
+|--------------|-------------|---------------|-------|
+| Customer — makes — Reservation | 1:N | Reservation: Total; Customer: Partial | A customer can make multiple reservations |
+| Reservation — assigned_to — Waiter | N:1 | Reservation: Total; Waiter: Partial | Each reservation is assigned to one waiter |
+| Reservation — places — Order | 1:N | Order: Total; Reservation: Partial | A reservation can have multiple orders |
+| Reservation — generates — Bill | 1:1 | Bill: Total; Reservation: Partial | Each bill belongs to one reservation; a reservation may not yet have a bill |
+| Order — contains — Order_Item | 1:N | Order_Item: Total; Order: Total | Each order contains one or more order items |
+| Order_Item — refers_to — Dish | N:1 | Order_Item: Total; Dish: Partial | Each order item refers to one dish |
+| Dish — belongs_to — Category | N:1 | Dish: Total; Category: Partial | Each dish belongs to one category |
 ### Assumptions
-- 
-- 
-- 
+1.Each customer has a unique C_ID, and each waiter has a unique W_ID.
+2.A customer can make multiple reservations, and reservations can be made in advance or as walk-ins.
+3.Each reservation records its date, time, number of guests, and reservation type.
+4.Each reservation is assigned to one waiter, and a waiter can serve multiple reservations.
+5.Each order is associated with a reservation and can contain multiple dishes through ORDER_ITEM.
+6.A dish belongs to one category, such as starter, main course, or dessert.
+7.A bill is generated for a reservation and includes the food total, service charge, and tax.
+8.Phone and Email are multivalued attributes in the reference diagram. In a relational database, these can be stored in separate tables if customers may have multiple phone numbers or email addresses.
 
 ---
 
