@@ -52,13 +52,13 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 | Program — Handled by — Trainer | M:N | Partial on both sides | Programs can have multiple trainers |
 
 ### Assumptions
-1.Each member has a unique M_ID.
-2.Each program has a unique P_ID, and each trainer has a unique T_ID.
-3.A member can enroll in multiple programs, and each program can have multiple members.
-4.A member can hold membership records over time.
-5.Membership payments are linked to Membership, while session payments are linked to Session.
-6.Each session is conducted by a trainer and has an attendance record.
-7.The diagram uses P_ID for both Program and Payment. In an implemented database, use distinct primary keys such as Program_ID and Payment_ID to avoid ambiguity.
+- Each member has a unique M_ID.
+- Each program has a unique P_ID, and each trainer has a unique T_ID.
+- A member can enroll in multiple programs, and each program can have multiple members.
+- A member can hold membership records over time.
+- Membership payments are linked to Membership, while session payments are linked to Session.
+- Each session is conducted by a trainer and has an attendance record.
+- The diagram uses P_ID for both Program and Payment. In an implemented database, use distinct primary keys such as Program_ID and Payment_ID to avoid ambiguity.
 ---
 
 # Scenario B: City Library Event & Book Lending System
@@ -107,13 +107,13 @@ The Central Library wants to manage book lending and cultural events.
 | Event — held in — ROOM | N:1 | Event: Total; ROOM: Partial | Each event takes place in one room |
 
 ### Assumptions
-1.Each member, book, loan, event, speaker, room, and fine has a unique identifier.
-2.A member can borrow multiple books, and each loan refers to one member and one book.
-3.A fine is generated only when a loan incurs an overdue charge; a loan may have no fine.
-4.Members can register for multiple events, and each event can have multiple registered members.
-5.An event can have multiple speakers, and a speaker can participate in multiple events.
-6.Each event is assigned to one room, while a room can host different events at different times.
-7.Room bookings for individual study purposes are not explicitly represented in this diagram; a separate ROOM_BOOKING entity would be needed to manage them.
+- Each member, book, loan, event, speaker, room, and fine has a unique identifier.
+- A member can borrow multiple books, and each loan refers to one member and one book.
+- A fine is generated only when a loan incurs an overdue charge; a loan may have no fine.
+- Members can register for multiple events, and each event can have multiple registered members.
+- An event can have multiple speakers, and a speaker can participate in multiple events.
+- Each event is assigned to one room, while a room can host different events at different times.
+- Room bookings for individual study purposes are not explicitly represented in this diagram; a separate ROOM_BOOKING entity would be needed to manage them.
 
 ---
 
@@ -159,14 +159,14 @@ A popular restaurant wants to manage reservations, orders, and billing.
 | Order_Item — refers_to — Dish | N:1 | Order_Item: Total; Dish: Partial | Each order item refers to one dish |
 | Dish — belongs_to — Category | N:1 | Dish: Total; Category: Partial | Each dish belongs to one category |
 ### Assumptions
-1.Each customer has a unique C_ID, and each waiter has a unique W_ID.
-2.A customer can make multiple reservations, and reservations can be made in advance or as walk-ins.
-3.Each reservation records its date, time, number of guests, and reservation type.
-4.Each reservation is assigned to one waiter, and a waiter can serve multiple reservations.
-5.Each order is associated with a reservation and can contain multiple dishes through ORDER_ITEM.
-6.A dish belongs to one category, such as starter, main course, or dessert.
-7.A bill is generated for a reservation and includes the food total, service charge, and tax.
-8.Phone and Email are multivalued attributes in the reference diagram. In a relational database, these can be stored in separate tables if customers may have multiple phone numbers or email addresses.
+- Each customer has a unique C_ID, and each waiter has a unique W_ID.
+- A customer can make multiple reservations, and reservations can be made in advance or as walk-ins.
+- Each reservation records its date, time, number of guests, and reservation type.
+- Each reservation is assigned to one waiter, and a waiter can serve multiple reservations.
+- Each order is associated with a reservation and can contain multiple dishes through ORDER_ITEM.
+- A dish belongs to one category, such as starter, main course, or dessert.
+- A bill is generated for a reservation and includes the food total, service charge, and tax.
+- Phone and Email are multivalued attributes in the reference diagram. In a relational database, these can be stored in separate tables if customers may have multiple phone numbers or email addresses.
 
 ---
 
