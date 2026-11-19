@@ -36,6 +36,22 @@ END;
 
 **Expected Output:**  
 Greater number is: 80
+**Program:**
+```
+DECLARE
+    a NUMBER := 50;
+    b NUMBER := 80;
+BEGIN
+    IF a > b THEN
+        DBMS_OUTPUT.PUT_LINE('Greater number is: ' || a);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Greater number is: ' || b);
+    END IF;
+END;
+/
+```
+**Output:**
+<img width="465" height="334" alt="Screenshot 2026-11-19 082317" src="https://github.com/user-attachments/assets/21af63e2-d1a0-4e9e-b463-b30d607a5b57" />
 
 ---
 
@@ -49,6 +65,26 @@ Greater number is: 80
 
 **Expected Output:**  
 Sum of first 10 natural numbers is: 55
+**Program:**
+```
+DECLARE
+    n NUMBER := 10;
+    i NUMBER := 1;
+    sum NUMBER := 0;
+BEGIN
+    WHILE i <= n LOOP
+        sum := sum + i;
+        i := i + 1;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum of first ' || n ||
+                         ' natural numbers is: ' || sum);
+END;
+/
+
+```
+**Output:**
+<img width="409" height="359" alt="Screenshot 2026-11-19 082737" src="https://github.com/user-attachments/assets/cd53450e-8b76-4d3d-8217-4f53d01cb825" />
 
 ---
 
@@ -63,6 +99,31 @@ Sum of first 10 natural numbers is: 55
 **Expected Output:**  
 n = 7  
 Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8
+**Program:**
+```
+DECLARE
+    n NUMBER := 7;
+    a NUMBER := 0;
+    b NUMBER := 1;
+    c NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Fibonacci sequence:');
+
+    FOR i IN 1..n LOOP
+        DBMS_OUTPUT.PUT(a || ' ');
+
+        c := a + b;
+        a := b;
+        b := c;
+    END LOOP;
+
+    DBMS_OUTPUT.NEW_LINE;
+END;
+/
+
+```
+**Output:**
+<img width="425" height="396" alt="Screenshot 2026-11-19 082817" src="https://github.com/user-attachments/assets/20d2117e-fc80-4a26-9855-4724bfa736bd" />
 
 ---
 
@@ -76,6 +137,26 @@ Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8
 **Expected Output:**  
 n = 1535  
 Reversed number is 5351
+**Program:**
+```
+DECLARE
+    n NUMBER := 1535;
+    rev NUMBER := 0;
+    digit NUMBER;
+BEGIN
+    WHILE n > 0 LOOP
+        digit := MOD(n, 10);
+        rev := rev * 10 + digit;
+        n := TRUNC(n / 10);
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Reversed number is: ' || rev);
+END;
+/
+
+```
+**Output:**
+<img width="405" height="386" alt="Screenshot 2026-11-19 082848" src="https://github.com/user-attachments/assets/7a85ea80-7dfb-40ca-a490-08ebfbc88142" />
 
 ---
 
@@ -89,6 +170,28 @@ Reversed number is 5351
 **Expected Output:**  
 a = 10, b = 9, c = 15  
 Largest of three number is 15
+**Program:**
+```
+DECLARE
+    a NUMBER := 10;
+    b NUMBER := 9;
+    c NUMBER := 15;
+BEGIN
+    IF a >= b AND a >= c THEN
+        DBMS_OUTPUT.PUT_LINE('Largest of three numbers is: ' || a);
+
+    ELSIF b >= a AND b >= c THEN
+        DBMS_OUTPUT.PUT_LINE('Largest of three numbers is: ' || b);
+
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Largest of three numbers is: ' || c);
+    END IF;
+END;
+/
+
+```
+**Output:**
+<img width="353" height="381" alt="Screenshot 2026-11-19 082919" src="https://github.com/user-attachments/assets/4fe169e6-852e-4974-bc05-5e6a7113b160" />
 
 ## RESULT
 Thus, the PL/SQL programs using variables, conditionals, and loops were executed successfully.
