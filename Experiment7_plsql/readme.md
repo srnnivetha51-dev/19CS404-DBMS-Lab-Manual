@@ -123,7 +123,8 @@ END;
 
 ```
 **Output:**
-<img width="425" height="396" alt="Screenshot 2026-11-19 082817" src="https://github.com/user-attachments/assets/20d2117e-fc80-4a26-9855-4724bfa736bd" />
+<img width="404" height="389" alt="image" src="https://github.com/user-attachments/assets/cc03d461-c6be-4c94-b70b-44df396d2a2b" />
+
 
 ---
 
